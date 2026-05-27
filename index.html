@@ -148,7 +148,7 @@ function App() {
         throw new Error("HTTP "+response.status+": "+t.slice(0,120));
       }
       const data = await response.json();
-      if (data.error) throw new Error(data.error);
+      if (data.error) throw new Error(typeof data.error === "object" ? JSON.stringify(data.error) : data.error);
       const raw = (data.content||[]).map(b=>b.text||"").join("").trim().replace(/```json|```/g,"").trim();
       if (!raw) throw new Error("Empty AI response");
       const parsed = JSON.parse(raw);
